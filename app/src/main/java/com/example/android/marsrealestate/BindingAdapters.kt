@@ -35,12 +35,9 @@ import com.example.android.marsrealestate.overview.PhotoGridAdapter
 @BindingAdapter("listData")
 fun bindRecyclerView(recyclerView: RecyclerView, data: List<MarsProperty>?) {
     val adapter = recyclerView.adapter as PhotoGridAdapter
-    adapter.submitList(data)
+    adapter.addHeaderAndSubmitList(data)
 }
 
-/**
- * Uses the Glide library to load an image by URL into an [ImageView]
- */
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {
     imgUrl?.let {
@@ -54,12 +51,6 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
     }
 }
 
-/**
- * This binding adapter displays the [MarsApiStatus] of the network request in an image view.  When
- * the request is loading, it displays a loading_animation.  If the request has an error, it
- * displays a broken image to reflect the connection error.  When the request is finished, it
- * hides the image view.
- */
 @BindingAdapter("marsApiStatus")
 fun bindStatus(statusImageView: ImageView, status: MarsApiStatus?) {
     when (status) {
@@ -73,6 +64,33 @@ fun bindStatus(statusImageView: ImageView, status: MarsApiStatus?) {
         }
         MarsApiStatus.DONE -> {
             statusImageView.visibility = View.GONE
+        }
+    }
+}
+
+@BindingAdapter("propertyPrice")
+fun setPropertyPrice(propertyTextView: TextView, item: MarsProperty?) {
+    val priceValue = item?.price?.toLong()
+    val price: String
+    when (item?.isRental) {
+        true -> { price = "$" + priceValue.toString() + "/month"
+            propertyTextView.text = price
+        }
+        false ->{
+            price = "$" + priceValue.toString()
+            propertyTextView.text = price
+        }
+    }
+}
+
+@BindingAdapter("propertyType")
+fun setPropertyType(propertyTextView: TextView, item: MarsProperty?) {
+    when (item?.isRental) {
+        true -> {
+            propertyTextView.setText(R.string.for_rent)
+        }
+        false -> {
+            propertyTextView.setText(R.string.for_sale)
         }
     }
 }

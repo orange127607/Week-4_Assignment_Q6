@@ -25,13 +25,40 @@
             name="property"
             type="com.example.android.marsrealestate.network.MarsProperty" />
     </data>
-    <ImageView
-        android:id="@+id/mars_image"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="170dp"
-        android:scaleType="centerCrop"
-        android:adjustViewBounds="true"
-        android:padding="2dp"
-        app:imageUrl="@{property.imgSrcUrl}"
-        tools:src="@tools:sample/backgrounds/scenic"/>
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/mars_image"
+            android:layout_width="0dp"
+            android:layout_height="170dp"
+            android:adjustViewBounds="true"
+            android:padding="2dp"
+            android:scaleType="centerCrop"
+            app:imageUrl="@{property.imgSrcUrl}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/backgrounds/scenic" />
+
+        <TextView
+            android:id="@+id/typeText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@+id/mars_image"
+            app:layout_constraintStart_toStartOf="@+id/mars_image"
+            app:layout_constraintTop_toBottomOf="@+id/mars_image"
+            app:propertyType="@{property}" />
+
+        <TextView
+            android:id="@+id/priceText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:propertyPrice="@{property}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/typeText" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
